@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    /* Visit https://aka.ms/tsconfig to read more about this file */
+    "noEmit": true,
+    "target": "ES2017",
+    "module": "ES2022",
+    "moduleResolution": "Node",
+    "esModuleInterop": true,
+    "sourceMap": true,
+    "forceConsistentCasingInFileNames": true,
+    "verbatimModuleSyntax": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "types": ["vitest/globals", "node"],
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
+    "rootDir": ".",
+    "paths": {
+      "@/*": ["./src/*"],
+      "~/*": ["."]
+    }
+  }
+}
