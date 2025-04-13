@@ -20,13 +20,12 @@
   },
   "type": "module",
   "scripts": {
-    "test": "vitest",
+    "test": "vitest --run",
     "posttest": "vitest run --coverage",
     "preversion": "npm test",
     "version": "git add .",
     "postversion": "npm publish --access public",
-    "prepublish": "tsup",
-    "prepublishOnly": "git commit -m 'chore(release): version bump to $npm_package_version'",
+    "prepublishOnly": "tsup",
     "postpack": "git push",
     "postpublish": "git push --tags"
   },

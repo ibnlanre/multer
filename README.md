@@ -239,14 +239,16 @@ BSD 3-Clause License - see the [LICENSE](LICENSE) file for details.
 
 Contributions are welcome! Please feel free to submit a Pull Request.
 
-To publish a new version, run `npm version <new-version>`, and then publish the package. The scripts will handle the rest. The versioning follows [Semantic Versioning](https://semver.org/).
+## Publishing
 
-The version number is automatically updated in `package.json`, and a new Git tag is created. The following commands should be run:
+To publish a new [version](https://docs.npmjs.com/cli/v8/commands/npm-version/), use the `npm version <new-version>` command. This process adheres to [Semantic Versioning](https://semver.org/) and requires a [clean working directory](https://git-scm.com/docs/git-status). Ensure all changes are committed or stashed before proceeding.
+
+The `npm version` command updates the version in `package.json` and creates a corresponding [Git tag](https://git-scm.com/docs/git-tag). Follow these steps to publish:
 
 ```bash
-% git config user.name "<your-name>"
-% git config user.email "<your-email>"
-% npm version <new-version>
+git config user.name "first_name last_name"
+git config user.email "your_email@example.com"
+npm version <new-version>
 ```
 
-The `<new-version>` can be one of the following: `major`, `minor`, `patch`, `premajor`, `preminor`, `prepatch`, `prerelease` or a specific version number.
+Replace `<new-version>` with one of the following options: `major`, `minor`, `patch`, `premajor`, `preminor`, `prepatch`, `prerelease`, or a specific version number. You do not have to run `git config` commands if you have already set your [Git](https://support.atlassian.com/bitbucket-cloud/docs/configure-your-dvcs-username-for-commits/) **username** and **email**.
