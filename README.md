@@ -241,14 +241,38 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## Publishing
 
-To publish a new [version](https://docs.npmjs.com/cli/v8/commands/npm-version/), use the `npm version <new-version>` command. This process adheres to [Semantic Versioning](https://semver.org/) and requires a [clean working directory](https://git-scm.com/docs/git-status). Ensure all changes are committed or stashed before proceeding.
+To release a new [version](https://docs.npmjs.com/cli/v8/commands/npm-version/), use the `npm version <new-version>` command. This adheres to [Semantic Versioning](https://semver.org/) principles and requires a [clean working directory](https://git-scm.com/docs/git-status).
 
-The `npm version` command updates the version in `package.json` and creates a corresponding [Git tag](https://git-scm.com/docs/git-tag). Follow these steps to publish:
+Once a version is tagged, publishing occurs automatically. Follow the checklist below to ensure the release process is seamless.
 
-```bash
-git config user.name "first_name last_name"
-git config user.email "your_email@example.com"
-npm version <new-version>
-```
+### Checklist
 
-Replace `<new-version>` with one of the following options: `major`, `minor`, `patch`, `premajor`, `preminor`, `prepatch`, `prerelease`, or a specific version number. You do not have to run `git config` commands if you have already set your [Git](https://support.atlassian.com/bitbucket-cloud/docs/configure-your-dvcs-username-for-commits/) **username** and **email**.
+1. **Verify Git configuration**: Ensure your Git username and email are correctly configured. This is necessary for tagging and committing changes.
+
+   ```bash
+   git config user.name "Your Name"
+   git config user.email "your_email@example.com"
+   ```
+
+   Skip this step if your Git [username and email](https://support.atlassian.com/bitbucket-cloud/docs/configure-your-dvcs-username-for-commits/) are already set.
+
+2. **Prepare your working directory**: Ensure there are no uncommitted changes or untracked files. Commit or stash all changes before proceeding.
+
+   ```bash
+   git add .
+   git commit -m "Your commit message"
+   ```
+
+3. **Authenticate with npm**: Log in to your npm account if not already authenticated. This step is necessary to publish packages.
+
+   ```bash
+   npm adduser
+   ```
+
+4. **Update the version**: Run the `npm version` command to increment the version in `package.json` and `package-lock.json`. This command also creates a new [Git tag](https://git-scm.com/docs/git-tag) for the version.
+
+   ```bash
+   npm version <new-version>
+   ```
+
+   Replace `<new-version>` with one of the following: `major`, `minor`, `patch`, `premajor`, `preminor`, `prepatch`, `prerelease`, or a specific version number.
