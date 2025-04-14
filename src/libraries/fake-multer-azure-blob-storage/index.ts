@@ -128,14 +128,16 @@ export const VALID_AZURE_BLOB_AUDIENCE = [
  * @example
  *
  * ```ts
- * import { FakeMulterAzureBlobStorage } from "@ibnlanre/multer";
- *
  * /////////////////////////////////
  * // JEST MOCK EXAMPLE
  * /////////////////////////////////
  *
  * jest.mock("multer-azure-blob-storage", () => {
- *     const originalModule = jest.requireActual("multer-azure-blob-storage");
+ *     type MulterAzureBlobStorage = typeof import("multer-azure-blob-storage");
+ *     const originalModule = jest.requireActual<MulterAzureBlobStorage>("multer-azure-blob-storage");
+ *
+ *     type MulterStorage = typeof import("@ibnlanre/multer");
+ *     const { FakeMulterAzureBlobStorage } = jest.requireActual<MulterStorage>("@ibnlanre/multer");
  *
  *     return {
  *         __esModule: true,
@@ -151,7 +153,11 @@ export const VALID_AZURE_BLOB_AUDIENCE = [
  * /////////////////////////////////
  *
  * vi.mock("multer-azure-blob-storage", async (importOriginal) => {
- *     const originalModule = await importOriginal();
+ *     type MulterAzureBlobStorage = typeof import("multer-azure-blob-storage");
+ *     const originalModule = await importOriginal<MulterAzureBlobStorage>();
+ *
+ *     type MulterStorage = typeof import("@ibnlanre/multer");
+ *     const { FakeMulterAzureBlobStorage } = await vi.importActual<MulterStorage>("@ibnlanre/multer");
  *
  *     return {
  *         __esModule: true,

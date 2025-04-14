@@ -74,8 +74,6 @@ interface InternalMulterCloudStorageOptions
  * @example
  *
  * ```ts
- * import { FakeMulterCloudStorage } from "@ibnlanre/multer"
- *
  * /////////////////////////////////
  * // JEST MOCK EXAMPLE
  * /////////////////////////////////
@@ -83,6 +81,9 @@ interface InternalMulterCloudStorageOptions
  * jest.mock("multer-cloud-storage", () => {
  *     type MulterCloudStorage = typeof import("multer-cloud-storage");
  *     const originalModule = jest.requireActual<MulterCloudStorage>("multer-cloud-storage");
+ *
+ *     type MulterStorage = typeof import("@ibnlanre/multer");
+ *     const { FakeMulterCloudStorage } = jest.requireActual<MulterStorage>("@ibnlanre/multer");
  *
  *     return {
  *        __esModule: true,
@@ -98,7 +99,11 @@ interface InternalMulterCloudStorageOptions
  * /////////////////////////////////
  *
  * vi.mock("multer-cloud-storage", async (importOriginal) => {
- *     const originalModule = await importOriginal();
+ *     type MulterCloudStorage = typeof import("multer-cloud-storage");
+ *     const originalModule = await importOriginal<MulterCloudStorage>();
+ *
+ *     type MulterStorage = typeof import("@ibnlanre/multer");
+ *     const { FakeMulterCloudStorage } = await vi.importActual<MulterStorage>("@ibnlanre/multer");
  *
  *     return {
  *        __esModule: true,

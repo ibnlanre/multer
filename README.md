@@ -27,30 +27,51 @@ npm install --save-dev @ibnlanre/multer
 This mock is specifically for the [multer](https://www.npmjs.com/package/multer) package, which is a popular middleware for handling `multipart/form-data` in Node.js. The mock provides a similar interface to the original package, allowing you to test your file uploads without actually writing files to disk.
 
 ```typescript
-import { FakeMulterStorage } from "@ibnlanre/multer";
-
 // Jest example
 jest.mock("multer", () => {
-  const originalModule = jest.requireActual("multer");
+  type Multer = typeof import("multer");
+  const originalModule = jest.requireActual<Multer>("multer");
+
+  type MulterStorage = typeof import("@ibnlanre/multer");
+  const { FakeMulterStorage } =
+    jest.requireActual<MulterStorage>("@ibnlanre/multer");
 
   return {
     __esModule: true,
     ...originalModule,
-    diskStorage: jest.fn((options) => {
+    default: jest.fn((options) => {
+      return originalModule(options);
+    }),
+    diskStorage: jest.fn((options: multer.DiskStorageOptions) => {
       return new FakeMulterStorage(options);
+    }),
+    memoryStorage: jest.fn(() => {
+      return new FakeMulterStorage();
     }),
   };
 });
 
 // Vitest example
 vi.mock("multer", async (importOriginal) => {
-  const originalModule = await importOriginal();
+  type Multer = typeof import("multer");
+  const originalModule = await importOriginal<Multer>();
+
+  type MulterStorage = typeof import("@ibnlanre/multer");
+  const { FakeMulterStorage } = await vi.importActual<MulterStorage>(
+    "@ibnlanre/multer"
+  );
 
   return {
     __esModule: true,
     ...originalModule,
-    diskStorage: vi.fn((options) => {
+    default: vi.fn((options) => {
+      return originalModule(options);
+    }),
+    diskStorage: vi.fn((options: multer.DiskStorageOptions) => {
       return new FakeMulterStorage(options);
+    }),
+    memoryStorage: vi.fn(() => {
+      return new FakeMulterStorage();
     }),
   };
 });
@@ -61,11 +82,14 @@ vi.mock("multer", async (importOriginal) => {
 This mock is specifically for the [multer-s3](https://www.npmjs.com/package/multer-s3) package, which is a wrapper around the AWS S3 SDK. The mock provides a similar interface to the original package, allowing you to test your file uploads without actually writing files to S3.
 
 ```typescript
-import { FakeMulterS3 } from "@ibnlanre/multer";
-
 // Jest example
 jest.mock("multer-s3", () => {
-  const originalModule = jest.requireActual("multer-s3");
+  type MulterS3 = typeof import("multer-s3");
+  const originalModule = jest.requireActual<MulterS3>("multer-s3");
+
+  type MulterStorage = typeof import("@ibnlanre/multer");
+  const { FakeMulterS3 } =
+    jest.requireActual<MulterStorage>("@ibnlanre/multer");
 
   return {
     __esModule: true,
@@ -78,7 +102,13 @@ jest.mock("multer-s3", () => {
 
 // Vitest example
 vi.mock("multer-s3", async (importOriginal) => {
-  const originalModule = await importOriginal();
+  type MulterS3 = typeof import("multer-s3");
+  const originalModule = await importOriginal<MulterS3>();
+
+  type MulterStorage = typeof import("@ibnlanre/multer");
+  const { FakeMulterS3 } = await vi.importActual<MulterStorage>(
+    "@ibnlanre/multer"
+  );
 
   return {
     __esModule: true,
@@ -95,11 +125,16 @@ vi.mock("multer-s3", async (importOriginal) => {
 This mock is specifically for the [multer-cloud-storage](https://www.npmjs.com/package/multer-cloud-storage) package, which is a wrapper around the Google Cloud Storage SDK. The mock provides a similar interface to the original package, allowing you to test your file uploads without actually writing files to Google Cloud Storage.
 
 ```typescript
-import { FakeMulterCloudStorage } from "@ibnlanre/multer";
-
 // Jest example
 jest.mock("multer-cloud-storage", () => {
-  const originalModule = jest.requireActual("multer-cloud-storage");
+  type MulterCloudStorage = typeof import("multer-cloud-storage");
+  const originalModule = jest.requireActual<MulterCloudStorage>(
+    "multer-cloud-storage"
+  );
+
+  type MulterStorage = typeof import("@ibnlanre/multer");
+  const { FakeMulterCloudStorage } =
+    jest.requireActual<MulterStorage>("@ibnlanre/multer");
 
   return {
     __esModule: true,
@@ -112,7 +147,13 @@ jest.mock("multer-cloud-storage", () => {
 
 // Vitest example
 vi.mock("multer-cloud-storage", async (importOriginal) => {
-  const originalModule = await importOriginal();
+  type MulterCloudStorage = typeof import("multer-cloud-storage");
+  const originalModule = await importOriginal<MulterCloudStorage>();
+
+  type MulterStorage = typeof import("@ibnlanre/multer");
+  const { FakeMulterCloudStorage } = await vi.importActual<MulterStorage>(
+    "@ibnlanre/multer"
+  );
 
   return {
     __esModule: true,
@@ -129,11 +170,16 @@ vi.mock("multer-cloud-storage", async (importOriginal) => {
 This mock is specifically for the [multer-azure-blob-storage](https://www.npmjs.com/package/multer-azure-blob-storage) package, which is a wrapper around the Azure Storage SDK. The mock provides a similar interface to the original package, allowing you to test your file uploads without actually writing files to Azure Blob Storage.
 
 ```typescript
-import { FakeMulterAzureBlobStorage } from "@ibnlanre/multer";
-
 // Jest example
 jest.mock("multer-azure-blob-storage", () => {
-  const originalModule = jest.requireActual("multer-azure-blob-storage");
+  type MulterAzureBlobStorage = typeof import("multer-azure-blob-storage");
+  const originalModule = jest.requireActual<MulterAzureBlobStorage>(
+    "multer-azure-blob-storage"
+  );
+
+  type MulterStorage = typeof import("@ibnlanre/multer");
+  const { FakeMulterAzureBlobStorage } =
+    jest.requireActual<MulterStorage>("@ibnlanre/multer");
 
   return {
     __esModule: true,
@@ -146,7 +192,13 @@ jest.mock("multer-azure-blob-storage", () => {
 
 // Vitest example
 vi.mock("multer-azure-blob-storage", async (importOriginal) => {
-  const originalModule = await importOriginal();
+  type MulterAzureBlobStorage = typeof import("multer-azure-blob-storage");
+  const originalModule = await importOriginal<MulterAzureBlobStorage>();
+
+  type MulterStorage = typeof import("@ibnlanre/multer");
+  const { FakeMulterAzureBlobStorage } = await vi.importActual<MulterStorage>(
+    "@ibnlanre/multer"
+  );
 
   return {
     __esModule: true,

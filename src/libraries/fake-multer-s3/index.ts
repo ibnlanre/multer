@@ -173,8 +173,6 @@ interface S3File extends Express.Multer.File {
  * @example
  *
  * ```ts
- * import { FakeMulterS3 } from "@ibnlanre/multer"
- *
  * /////////////////////////////////
  * // JEST MOCK EXAMPLE
  * /////////////////////////////////
@@ -182,6 +180,9 @@ interface S3File extends Express.Multer.File {
  * jest.mock("multer-s3", () => {
  *     type MulterS3 = typeof import("multer-s3");
  *     const originalModule = jest.requireActual<MulterS3>("multer-s3");
+ *
+ *     type MulterStorage = typeof import("@ibnlanre/multer");
+ *     const { FakeMulterS3 } = jest.requireActual<MulterStorage>("@ibnlanre/multer");
  *
  *     return {
  *         __esModule: true,
@@ -197,15 +198,19 @@ interface S3File extends Express.Multer.File {
  * /////////////////////////////////
  *
  * vi.mock("multer-s3", async (importOriginal) => {
- *     const originalModule = await importOriginal();
+ *     type MulterS3 = typeof import("multer-s3");
+ *     const originalModule = await importOriginal<MulterS3>();
  *
- *    return {
- *        __esModule: true,
- *        ...originalModule,
- *        default: vi.fn((options) => {
- *            return new FakeMulterS3(options);
- *        }),
- *    };
+ *     type MulterStorage = typeof import("@ibnlanre/multer");
+ *     const { FakeMulterS3 } = await vi.importActual<MulterStorage>("@ibnlanre/multer");
+ *
+ *     return {
+ *         __esModule: true,
+ *         ...originalModule,
+ *         default: vi.fn((options) => {
+ *             return new FakeMulterS3(options);
+ *         }),
+ *     };
  * });
  * ```
  */

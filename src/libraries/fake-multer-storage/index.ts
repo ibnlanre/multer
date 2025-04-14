@@ -31,8 +31,6 @@ export type RemoveFile = (
  * @example
  *
  * ```ts
- * import { FakeMulterStorage } from "@ibnlanre/multer";
- *
  * /////////////////////////////////
  * // JEST MOCK EXAMPLE
  * /////////////////////////////////
@@ -40,6 +38,9 @@ export type RemoveFile = (
  * jest.mock("multer", () => {
  *     type Multer = typeof import("multer");
  *     const originalModule = jest.requireActual<Multer>("multer");
+ *
+ *     type MulterStorage = typeof import("@ibnlanre/multer");
+ *     const { FakeMulterStorage } = jest.requireActual<MulterStorage>("@ibnlanre/multer");
  *
  *     return {
  *         __esModule: true,
@@ -61,7 +62,11 @@ export type RemoveFile = (
  * /////////////////////////////////
  *
  * vi.mock("multer", async (importOriginal) => {
- *     const originalModule = await importOriginal();
+ *     type Multer = typeof import("multer");
+ *     const originalModule = await importOriginal<Multer>();
+ *
+ *     type MulterStorage = typeof import("@ibnlanre/multer");
+ *     const { FakeMulterStorage } = await vi.importActual<MulterStorage>("@ibnlanre/multer");
  *
  *     return {
  *         __esModule: true,
