@@ -22,8 +22,7 @@
   "scripts": {
     "preversion": "npm test",
     "pretest": "git pull",
-    "test": "vitest --run",
-    "posttest": "vitest run --coverage",
+    "test": "vitest run --coverage",
     "version": "git add .",
     "postversion": "npm publish --access public",
     "prepublishOnly": "tsup",
